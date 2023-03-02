@@ -11,14 +11,14 @@ namespace Hogra {
 	SceneObject* SceneObjectFactory::Create2DSpriteObject(const std::string& texturePath, OrientationProvider* orientationProvider) {
 		auto* geometry = GeometryFactory::GetInstance()->GetQuad();
 		auto* program = ShaderProgramFactory::GetInstance()->GetForwardSpriteProgram();
-		auto* volumeMaterial = Allocator::New<Material>();
-		volumeMaterial->Init(program);
-		volumeMaterial->SetAlphaBlend(true);
+		auto* material = Allocator::New<Material>();
+		material->Init(program);
+		material->SetAlphaBlend(true);
 		auto* texture = Allocator::New<Texture2D>();
 		texture->Init(texturePath, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-		volumeMaterial->AddTexture(texture);
+		material->AddTexture(texture);
 		auto* mesh = Allocator::New<Mesh>();
-		mesh->Init(volumeMaterial, geometry);
+		mesh->Init(material, geometry);
 		auto* obj = Allocator::New<SceneObject>();
 		obj->Init(mesh);
 

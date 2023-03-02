@@ -6,13 +6,13 @@ namespace Hogra {
 
 	void Mesh::Init(Material* _material, Geometry* _geometry)
 	{
-		this->volumeMaterial = _material;
+		this->material = _material;
 		this->geometry = _geometry;
 	}
 
 	void Mesh::Bind() const
 	{
-		volumeMaterial->Bind();
+		material->Bind();
 		if (depthTest) {
 			glEnable(GL_DEPTH_TEST);
 		}
@@ -54,7 +54,7 @@ namespace Hogra {
 	}
 
 	Material* Mesh::getMaterial() const {
-		return volumeMaterial;
+		return material;
 	}
 
 	Geometry* Mesh::getGeometry() const

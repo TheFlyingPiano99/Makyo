@@ -73,6 +73,9 @@
     <Filter Include="Resource Files\Scenes">
       <UniqueIdentifier>{e19ec4f1-d8af-47fc-bf97-c6ccc6e6887e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Makio">
+      <UniqueIdentifier>{8fc3d0f1-9edc-4e8e-8f74-1cbd8752d9cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp">
@@ -409,6 +412,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectionalLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="makio\Makio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -764,6 +770,9 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>Header Files\Model\Lighting</Filter>
     </ClInclude>
+    <ClInclude Include="makio\makio.h">
+      <Filter>Header Files\Makio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -954,7 +963,10 @@
     <None Include="..\Resources\Scenes\magicMirrorScene.json">
       <Filter>Resource Files\Scenes</Filter>
     </None>
-    <None Include="..\Resources\Shaders\magicMirror.frag">
+    <None Include="..\Resources\Shaders\makioCanvas.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\makioToScreen.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -19,7 +19,7 @@ namespace Hogra {
 			greater_func
 		};
 
-		void Init(Material* volumeMaterial, Geometry* geometry);
+		void Init(Material* material, Geometry* geometry);
 
 		// Draws the mesh
 		void Bind() const;
@@ -39,7 +39,7 @@ namespace Hogra {
 		void setDepthFunc(const DepthTestFunc func);
 
 	private:
-		Material* volumeMaterial;
+		Material* material;
 		Geometry* geometry;
 		bool depthTest = true;
 		bool stencilTest = false;

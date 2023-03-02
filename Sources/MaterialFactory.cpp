@@ -80,23 +80,23 @@ namespace Hogra {
 		}
 
 		auto* shader = ShaderProgramFactory::GetInstance()->GetDeferredPBRProgramWithMapping();
-		auto* volumeMaterial = Allocator::New<Material>();
-		volumeMaterial->Init(shader);
-		volumeMaterial->AddTexture(albedoMap);
-		volumeMaterial->AddTexture(normalMap);
-		volumeMaterial->AddTexture(roughnessMetallicAO);
-		loadedPBRMaterials.emplace(materialName, volumeMaterial);
-		return volumeMaterial;
+		auto* material = Allocator::New<Material>();
+		material->Init(shader);
+		material->AddTexture(albedoMap);
+		material->AddTexture(normalMap);
+		material->AddTexture(roughnessMetallicAO);
+		loadedPBRMaterials.emplace(materialName, material);
+		return material;
 	}
 	
 	Material* MaterialFactory::getEmissiveMaterial(const char* materialName, const glm::vec3& color, const float intensity)
 	{
 		ShaderProgram* program = ShaderProgramFactory::GetInstance()->GetDeferredEmissiveMaterialProgram();
-		auto* volumeMaterial = Allocator::New<Material>();
-		volumeMaterial->Init(program);
-		volumeMaterial->setAlbedo(color * intensity);
-		volumeMaterial->SetAlphaBlend(false);
-		return volumeMaterial;
+		auto* material = Allocator::New<Material>();
+		material->Init(program);
+		material->setAlbedo(color * intensity);
+		material->SetAlphaBlend(false);
+		return material;
 	}
 
 	void MaterialFactory::ForgetPointers()

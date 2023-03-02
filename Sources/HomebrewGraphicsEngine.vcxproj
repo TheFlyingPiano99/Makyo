@@ -216,6 +216,7 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="InstanceGroup.cpp" />
+    <ClCompile Include="makio\Makio.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="AudioListener.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="InstanceGroup.h" />
     <ClInclude Include="jsonParseUtils.h" />
+    <ClInclude Include="makio\makio.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="AudioListener.h" />
@@ -397,7 +399,8 @@
     <None Include="..\Resources\Shaders\deferredHomogeneGeometryPass.frag" />
     <None Include="..\Resources\Shaders\instanced2D.vert" />
     <None Include="..\Resources\Shaders\instanced3D.vert" />
-    <None Include="..\Resources\Shaders\magicMirror.frag" />
+    <None Include="..\Resources\Shaders\makioCanvas.frag" />
+    <None Include="..\Resources\Shaders\makioToScreen.frag" />
     <None Include="..\Resources\Shaders\omniDirShadowCast.frag" />
     <None Include="..\Resources\Shaders\omniDirShadowCast.geom" />
     <None Include="..\Resources\Shaders\omniDirShadowCast.vert" />

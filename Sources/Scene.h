@@ -149,6 +149,26 @@ namespace Hogra {
 			return val->second;
 		}
 
+		SceneObject* GetSceneObjectByName(std::string_view name) {
+			SceneObject* obj = nullptr;
+			for (auto iter : sceneObjects) {
+				if (iter->GetName() == name) {
+					obj = iter;
+				}
+			}
+			return obj;
+		}
+
+		ShaderProgram* GetShaderProgramByName(std::string_view name) {
+			ShaderProgram* obj = nullptr;
+			for (auto iter : shaders) {
+				if (iter->GetName() == name) {
+					obj = iter;
+				}
+			}
+			return obj;
+		}
+
 	private:
 
 		void DeleteSceneObject(SceneObject* object);

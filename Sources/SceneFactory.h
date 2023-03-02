@@ -23,6 +23,8 @@ namespace Hogra {
 
 		Scene* CreatePixelPhysicsDemoScene(unsigned int _contextW, unsigned int _contextH);
 
+		Scene* CreateMakioScene(unsigned int _contextW, unsigned int _contextH);
+
 		ForceField* InitGravitation(Scene* scene);
 
 		CompositeCollider* InitCompositeCollider();

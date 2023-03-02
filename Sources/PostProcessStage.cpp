@@ -11,11 +11,11 @@ namespace Hogra {
 			fragmentShaderPath
 		);
 		colorTexture.Init(GL_RGBA16F, glm::ivec2(contextWidth, contextHeight), 0, GL_RGBA, GL_FLOAT);
-		volumeMaterial = Allocator::New<Material>();
-		volumeMaterial->Init(&program);
-		volumeMaterial->AddTexture(&colorTexture);
+		material = Allocator::New<Material>();
+		material->Init(&program);
+		material->AddTexture(&colorTexture);
 		mesh = Allocator::New<Mesh>();
-		mesh->Init(volumeMaterial, GeometryFactory::GetInstance()->GetSimpleQuad());
+		mesh->Init(material, GeometryFactory::GetInstance()->GetSimpleQuad());
 		mesh->SetDepthTest(false);
 		mesh->setStencilTest(false);
 		fbo.LinkTexture(GL_COLOR_ATTACHMENT0, colorTexture, 0);
@@ -47,11 +47,11 @@ namespace Hogra {
 
 	void PostProcessStage::OnContextResize(unsigned int contextWidth, unsigned int contextHeight)
 	{
-		volumeMaterial->ClearTextures();
+		material->ClearTextures();
 		colorTexture.Delete();
 		
 		colorTexture.Init(GL_RGBA16F, glm::ivec2(contextWidth, contextHeight), 0, GL_RGBA, GL_FLOAT);
-		volumeMaterial->AddTexture(&colorTexture);
+		material->AddTexture(&colorTexture);
 		fbo.LinkTexture(GL_COLOR_ATTACHMENT0, colorTexture, 0);
 		fbo.Unbind();
 	}

@@ -118,8 +118,8 @@ namespace Hogra {
 			Allocator::Delete(shader);
 		}
 
-		for (auto volumeMaterial : materials) {
-			Allocator::Delete(volumeMaterial);
+		for (auto material : materials) {
+			Allocator::Delete(material);
 		}
 
 		for (auto geometry : geometries) {

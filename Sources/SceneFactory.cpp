@@ -28,6 +28,7 @@
 #include "UniformVariableImpl.h"
 #include "HograTime.h"
 #include "DirectionalShadowCaster.h"
+#include "makio/Makio.h"
 
 #include "fallingSand/chunk.h"
 #include "fallingSand/water.h"
@@ -113,7 +114,6 @@ namespace Hogra {
 		InitSkyBox(scene);
 
 		InitGround(scene);
-
 		
 		ForceField* field = InitGravitation(scene);
 		auto* col = InitCompositeCollider();
@@ -600,12 +600,12 @@ namespace Hogra {
 			AssetFolderPathManager::getInstance()->getShaderFolderPath().append("bypass.frag")
 		);
 
-		auto* volumeMaterial = Allocator::New<Material>();
-		volumeMaterial->Init(program);
-		volumeMaterial->SetAlphaBlend(true);
+		auto* material = Allocator::New<Material>();
+		material->Init(program);
+		material->SetAlphaBlend(true);
 		auto* quad = GeometryFactory::GetInstance()->GetQuad();
 		auto* mesh = Allocator::New<Mesh>();
-		mesh->Init(volumeMaterial, quad);
+		mesh->Init(material, quad);
 		mesh->SetDepthTest(false);
 		auto chunk = Allocator::New<FallingSand::Chunk>();
 		chunk->Init(mesh);
@@ -756,6 +756,17 @@ namespace Hogra {
 		return scene;
 	}
 
+	Scene* SceneFactory::CreateMakioScene(unsigned int _contextW, unsigned int _contextH)
+	{
+		auto* scene = LoadSceneFromFile(AssetFolderPathManager::getInstance()->getScenesFolderPath().append("magicMirrorScene.json"));
+		
+		auto* makioCanvas = Allocator::New<MakioSim::MakioCanvas>();
+		makioCanvas->Init(scene->GetShaderProgramByName("magicMirrorShader"));
+		scene->GetSceneObjectByName("Dummy makio obj")->AddComponent(makioCanvas);
+		scene->GetSceneObjectByName("Dummy makio obj")->SetIsVisible(false);
+		return scene;
+	}
+
 	
 	ForceField* SceneFactory::InitGravitation(Scene* scene)
 	{
@@ -867,10 +878,10 @@ namespace Hogra {
 	void SceneFactory::InitCube(Scene* scene, glm::vec3 pos, Collider* collider, ForceField* field)
 	{
 		ShaderProgram* cubeShader = ShaderProgramFactory::GetInstance()->GetDeferredPBRProgramWithMapping();
-		auto* volumeMaterial = MaterialFactory::GetInstance()->getPBRMaterial("vinyl");
+		auto* material = MaterialFactory::GetInstance()->getPBRMaterial("vinyl");
 		Geometry* cubeGeometry = GeometryFactory::GetInstance()->GetCube();
 		auto* cubeMesh = Allocator::New<Mesh>();
-		cubeMesh->Init(volumeMaterial, cubeGeometry);
+		cubeMesh->Init(material, cubeGeometry);
 		auto* obj = Allocator::New<SceneObject>();
 		obj->Init(cubeMesh);
 		obj->SetPosition(pos);
@@ -905,16 +916,16 @@ namespace Hogra {
 		collider->Init();
 		collider->SetRadius(0.5f);
 		scene->AddCollider(collider);
-		Material* volumeMaterial;
+		Material* material;
 		if (std::string(materialName) == std::string("glowing")) {
-			volumeMaterial = MaterialFactory::GetInstance()->getEmissiveMaterial("glowing", glm::vec3(0, 0, 1), 100.0f);
+			material = MaterialFactory::GetInstance()->getEmissiveMaterial("glowing", glm::vec3(0, 0, 1), 100.0f);
 		}
 		else {
-			volumeMaterial = MaterialFactory::GetInstance()->getPBRMaterial(materialName);
+			material = MaterialFactory::GetInstance()->getPBRMaterial(materialName);
 		}
 		Geometry* geometry = GeometryFactory::GetInstance()->GetSphere();
 		auto* mesh = Allocator::New<Mesh>();
-		mesh->Init(volumeMaterial, geometry);
+		mesh->Init(material, geometry);
 		auto* obj = Allocator::New<SceneObject>();
 		obj->Init(mesh);
 		obj->SetPosition(pos);
@@ -982,10 +993,10 @@ namespace Hogra {
 	{
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				auto* volumeMaterial = MaterialFactory::GetInstance()->getPBRMaterial("vinyl");
+				auto* material = MaterialFactory::GetInstance()->getPBRMaterial("vinyl");
 				Geometry* cubeGeometry = GeometryFactory::GetInstance()->GetCube();
 				auto* cubeMesh = Allocator::New<Mesh>();
-				cubeMesh->Init(volumeMaterial, cubeGeometry);
+				cubeMesh->Init(material, cubeGeometry);
 				cubeMesh->SetDepthTest(true);
 				auto* obj = Allocator::New<SceneObject>();
 				obj->Init(cubeMesh);
@@ -1048,11 +1059,11 @@ namespace Hogra {
 		collider->SetRadius(0.5f);
 		scene->AddCollider(collider);
 		ShaderProgram* shader = ShaderProgramFactory::GetInstance()->GetDeferredPBRProgramWithMapping();
-		auto* volumeMaterial = MaterialFactory::GetInstance()->getPBRMaterial("planks");
+		auto* material = MaterialFactory::GetInstance()->getPBRMaterial("planks");
 		Geometry* geometry = GeometryLoader().Load(AssetFolderPathManager::getInstance()->getGeometryFolderPath().append("mango.obj"));
 		geometry->SetFaceCulling(false);
 		auto* mesh = Allocator::New<Mesh>();
-		mesh->Init(volumeMaterial, geometry);
+		mesh->Init(material, geometry);
 		auto* obj = Allocator::New<SceneObject>();
 		obj->Init(mesh);
 		obj->SetPosition(pos);
@@ -1153,10 +1164,10 @@ namespace Hogra {
 	{
 		auto obj = Allocator::New<SceneObject>();
 		auto geom = GeometryFactory::GetInstance()->GetCilinder();
-		auto volumeMaterial = MaterialFactory::GetInstance()->getEmissiveMaterial("laser", glm::vec3(1.0f, 0.0f, 0.0f), 100.0f);
+		auto material = MaterialFactory::GetInstance()->getEmissiveMaterial("laser", glm::vec3(1.0f, 0.0f, 0.0f), 100.0f);
 		auto mesh = Allocator::New<Mesh>();
 		mesh->SetDepthTest(false);
-		mesh->Init(volumeMaterial, geom);
+		mesh->Init(material, geom);
 		obj->Init(mesh);
 		obj->SetPosition(glm::vec3(0,5,0));
 		obj->SetIsVisible(true);
