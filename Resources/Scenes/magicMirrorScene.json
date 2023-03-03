@@ -27,33 +27,38 @@
       "uniforms": [
         {
           "type": "int",
-          "uniName": "resolution",
-          "uniValue": 200
+          "uniName": "mirrorSampleResolution",
+          "uniValue": 100
+        },
+        {
+          "type": "vec2",
+          "uniName": "mirrorSampleAreaScale",
+          "uniValue": [ 0.1, 0.1 ]
         },
         {
           "type": "float",
           "uniName": "mirrorDistance",
-          "uniValue": 1.5
+          "uniValue": 0.5
         },
         {
           "type": "float",
           "uniName": "mirrorShininess",
-          "uniValue": 1000000.0
+          "uniValue": 100000.0
         },
         {
           "type": "float",
           "uniName": "mirrorDepth",
-          "uniValue": 0.0001
+          "uniValue": 0.00001
         },
         {
           "type": "float",
           "uniName": "mirrorCurvatureRadius",
-          "uniValue": 300
+          "uniValue": 500
         },
         {
-          "type": "vec3",
+          "type": "vec2",
           "uniName": "mirrorSize",
-          "uniValue": [ 0.9, 0.9, 1 ]
+          "uniValue": [ 1.0, 1.0 ]
         },
         {
           "type": "vec3",
@@ -63,7 +68,7 @@
         {
           "type": "float",
           "uniName": "lightIntensity",
-          "uniValue": 100000.0
+          "uniValue": 10000.0
         }
       ]
     }

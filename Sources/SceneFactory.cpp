@@ -764,6 +764,15 @@ namespace Hogra {
 		makioCanvas->Init(scene->GetShaderProgramByName("magicMirrorShader"));
 		scene->GetSceneObjectByName("Dummy makio obj")->AddComponent(makioCanvas);
 		scene->GetSceneObjectByName("Dummy makio obj")->SetIsVisible(false);
+
+		auto* toggleVisHeight = Allocator::New<ButtonKeyAction>();
+		toggleVisHeight->Init(GLFW_KEY_H, ButtonKeyAction::TriggerType::triggerOnPress);
+		toggleVisHeight->SetAction(
+			[makioCanvas]() {
+				makioCanvas->ToggleVisHeight();
+			}
+		);
+		ControlActionManager::getInstance()->RegisterKeyAction(toggleVisHeight);
 		return scene;
 	}
 

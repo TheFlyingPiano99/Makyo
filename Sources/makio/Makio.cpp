@@ -7,6 +7,9 @@
 #include "../UniformVariableImpl.h"
 #include "../GlobalInclude.h"
 #include <glm/mat4x4.hpp>
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 namespace Hogra::MakioSim {
 
@@ -17,7 +20,7 @@ namespace Hogra::MakioSim {
 		{
 			auto* quad = GeometryFactory::GetInstance()->GetSimpleQuad();
 			auto* canvasTexture = Allocator::New<Texture2D>();
-			canvasTexture->Init(GL_RGBA16F, glm::ivec2(MAKIO_RENDER_RES_X, MAKIO_RENDER_RES_Y), 0, GL_RGBA, GL_FLOAT);
+			canvasTexture->Init(GL_RGBA32F, glm::ivec2(MAKIO_RENDER_RES_X, MAKIO_RENDER_RES_Y), 0, GL_RGBA, GL_FLOAT);
 			canvasFBO.Init();
 			canvasFBO.LinkTexture(GL_COLOR_ATTACHMENT0, *canvasTexture);
 			auto* quadrantMaterial = Allocator::New<Material>();
@@ -47,6 +50,8 @@ namespace Hogra::MakioSim {
 
 			quadrantCount = glm::ivec2(64, 64);
 			nextQuadrantToRender = glm::ivec2(0, 0);
+			irradianceScale = 2.0f;
+
 		}
 
 		void MakioCanvas::Draw(FBO& outFBO, const Texture2D& depthTexture, const Camera& camera)
@@ -95,8 +100,22 @@ namespace Hogra::MakioSim {
 				* glm::translate(glm::vec3((float)GlobalVariables::windowWidth / 2.0f, (float)GlobalVariables::windowHeight / 2.0f, 0)) 
 				* glm::scale(glm::vec3(300, 300, 1));
 			fullScreenQuad.getMaterial()->GetShaderProgram()->SetUniform("transform", transform);
+			fullScreenQuad.getMaterial()->GetShaderProgram()->SetUniform("visHeight", visHeight);
+			fullScreenQuad.getMaterial()->GetShaderProgram()->SetUniform("irradianceScale", irradianceScale);
 
 			fullScreenQuad.Draw();
 			outFBO.Unbind();
 		}
+
+		void MakioCanvas::UpdateGui()
+		{
+			/*
+			ImGui::Begin("Makyo settings");
+			{
+				ImGui::SliderFloat("Irradiance scale", &irradianceScale, 0.0f, 10.0f);
+			}
+			ImGui::End();
+			*/
+		}
+
 	}
