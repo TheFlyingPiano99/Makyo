@@ -67,3 +67,4 @@ Sources/HomebrewGraphicsEngine.vcxproj.filters
 *.log
 *.pdb
 *.tlog
+*.zip
