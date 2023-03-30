@@ -108,6 +108,14 @@ namespace Hogra {
 			uniforms.clear();
 		}
 
+		inline AbstractUniformVariable* GetUniformVariable(std::string_view name) {
+			auto iter = std::find_if(uniforms.begin(), uniforms.end(), [name](AbstractUniformVariable* uniform) { return uniform->GetName() == name; });
+			if (iter != uniforms.end()) {
+				return *iter;
+			}
+			return nullptr;
+		}
+
 	private:
 		GLuint glID;
 

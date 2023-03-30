@@ -2,6 +2,8 @@
 
 #include "../Component.h"
 #include "../Mesh.h"
+#include "../AssetFolderPathManager.h"
+#include <chrono>
 
 namespace Hogra::MakioSim {
 
@@ -15,8 +17,14 @@ namespace Hogra::MakioSim {
 
 			void UpdateGui() override;
 
+			void OnFinishRender();
+
 			void ToggleVisHeight() {
-				visHeight = !visHeight;
+				visHeight = (visHeight < 2) ? visHeight + 1 : 0;
+			}
+
+			void Print() {
+				isInstantPrint = true;
 			}
 
 		private:
@@ -27,8 +35,9 @@ namespace Hogra::MakioSim {
 			Mesh fullScreenQuad;
 			glm::ivec2 quadrantCount;
 			glm::ivec2 nextQuadrantToRender;
-			bool visHeight = false;
+			int visHeight = 0;
 			float irradianceScale = 1.0;
-
+			bool isInstantPrint = false;
+			bool wasFinished = false;
 		};
 }

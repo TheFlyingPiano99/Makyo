@@ -20,6 +20,10 @@ namespace Hogra {
 
 		const T Get();
 
+		std::string_view GetName() const override {
+			return key;
+		}
+
 	private:
 		std::string key;
 		T value;

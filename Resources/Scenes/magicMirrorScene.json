@@ -33,27 +33,52 @@
         {
           "type": "vec2",
           "uniName": "mirrorSampleAreaScale",
-          "uniValue": [ 0.1, 0.1 ]
+          "uniValue": [ 0.6, 0.6 ]
         },
         {
           "type": "float",
           "uniName": "mirrorDistance",
-          "uniValue": 0.5
+          "uniValue": 5
+        },
+        {
+          "type": "float",
+          "uniName": "mirrorConvexity",
+          "uniValue": 0
+        },
+        {
+          "type": "float",
+          "uniName": "carvRadius",
+          "uniValue": 50
+        },
+        {
+          "type": "float",
+          "uniName": "carvConvexity",
+          "uniValue": 1
+        },
+        {
+          "type": "int",
+          "uniName": "lineMode",
+          "uniValue": 0
         },
         {
           "type": "float",
           "uniName": "mirrorShininess",
-          "uniValue": 100000.0
+          "uniValue": 1000000.0
         },
         {
           "type": "float",
           "uniName": "mirrorDepth",
-          "uniValue": 0.00001
+          "uniValue": -0.0001
+        },
+        {
+          "type": "float",
+          "uniName": "lineWidth",
+          "uniValue": 0.02
         },
         {
           "type": "float",
           "uniName": "mirrorCurvatureRadius",
-          "uniValue": 500
+          "uniValue": 30
         },
         {
           "type": "vec2",
@@ -61,14 +86,54 @@
           "uniValue": [ 1.0, 1.0 ]
         },
         {
-          "type": "vec3",
-          "uniName": "lightDir",
-          "uniValue": [ 0, 0, 1 ]
+          "type": "vec4",
+          "uniName": "lightPos",
+          "uniValue": [ 0.0, 0.0, 1.0, 0.0 ]
         },
         {
           "type": "float",
-          "uniName": "lightIntensity",
-          "uniValue": 10000.0
+          "uniName": "lightPowerDensity",
+          "uniValue": 0.05
+        },
+        {
+          "type": "float",
+          "uniName": "_sx0",
+          "uniValue": 0.2
+        },
+        {
+          "type": "float",
+          "uniName": "_sx1",
+          "uniValue": 0.4
+        },
+        {
+          "type": "float",
+          "uniName": "_sx2",
+          "uniValue": 0.6
+        },
+        {
+          "type": "float",
+          "uniName": "_sx3",
+          "uniValue": 0.8
+        },
+        {
+          "type": "float",
+          "uniName": "_sy0",
+          "uniValue": 0.2
+        },
+        {
+          "type": "float",
+          "uniName": "_sy1",
+          "uniValue": 0.4
+        },
+        {
+          "type": "float",
+          "uniName": "_sy2",
+          "uniValue": 0.6
+        },
+        {
+          "type": "float",
+          "uniName": "_sy3",
+          "uniValue": 0.8
         }
       ]
     }
@@ -132,9 +197,9 @@
       "alignment": "centered",
       "verticalPlacing": "relative",
       "horizontalPlacing": "relative",
-      "screenPosition": [ 0.5, 0.1 ],
+      "screenPosition": [ 0.5, 0.05 ],
       "scale": 0.5,
-      "color": [ 0, 1, 0.1, 1 ]
+      "color": [ 0, 1, 0.5, 1 ]
     }
   ]
 }

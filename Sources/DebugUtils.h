@@ -38,7 +38,6 @@ namespace Hogra {
 		constexpr bool logToFile = false;
 
 
-
 #if PRINT_PRIORITY >= P_ERROR_ONLY
 		inline void PrintError(const char* context, const char* message)
 		{
@@ -62,7 +61,6 @@ namespace Hogra {
 
 			}
 		}
-
 
 		inline void PrintTextureInfo(const char* context, const Texture2D& texture)
 		{

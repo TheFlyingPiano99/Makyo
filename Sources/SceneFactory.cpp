@@ -773,6 +773,16 @@ namespace Hogra {
 			}
 		);
 		ControlActionManager::getInstance()->RegisterKeyAction(toggleVisHeight);
+
+		auto* print = Allocator::New<ButtonKeyAction>();
+		print->Init(GLFW_KEY_P, ButtonKeyAction::TriggerType::triggerOnPress);
+		print->SetAction(
+			[makioCanvas]() {
+				makioCanvas->Print();
+			}
+		);
+		ControlActionManager::getInstance()->RegisterKeyAction(print);
+
 		return scene;
 	}
 
@@ -1410,7 +1420,7 @@ namespace Hogra {
 							shader->BindUniformVariable(uniVar);
 						}
 						else if ("vec4" == typeStr) {
-							auto uniVar = Allocator::New<UniformVariable<glm::vec3>>();
+							auto uniVar = Allocator::New<UniformVariable<glm::vec4>>();
 							std::string name = uniformData["uniName"];
 							uniVar->Init(name, parseVec4(uniformData["uniValue"]));
 							shader->BindUniformVariable(uniVar);

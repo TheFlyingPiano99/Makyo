@@ -46,6 +46,8 @@ namespace Hogra {
 
 		inline static void BindDefault();
 		static FBO&& GetDefault();
+	
+		void saveToPPM(std::string& savePath);
 	};
 
 }
