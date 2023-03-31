@@ -48,17 +48,17 @@
         {
           "type": "float",
           "uniName": "carvRadius",
-          "uniValue": 50
+          "uniValue": 20
         },
         {
           "type": "float",
           "uniName": "carvConvexity",
-          "uniValue": 1
+          "uniValue": -1
         },
         {
           "type": "int",
           "uniName": "lineMode",
-          "uniValue": 0
+          "uniValue": 1
         },
         {
           "type": "float",
@@ -68,7 +68,7 @@
         {
           "type": "float",
           "uniName": "mirrorDepth",
-          "uniValue": -0.0001
+          "uniValue": 0.0001
         },
         {
           "type": "float",
