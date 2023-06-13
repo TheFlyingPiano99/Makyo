@@ -7,7 +7,7 @@
 
 namespace Hogra::MakioSim {
 
-		class MakioCanvas : public Component
+		class MakyoCanvas : public Component
 		{
 		public:
 

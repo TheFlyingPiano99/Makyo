@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{0f5bc1b2-d956-4795-b55d-c06bb593c52d}</ProjectGuid>
-    <RootNamespace>HomebrewGraphicsEngine</RootNamespace>
+    <RootNamespace>makyo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -177,7 +177,9 @@
     <ClCompile Include="ControlAction.cpp" />
     <ClCompile Include="ControlActionManager.cpp" />
     <ClCompile Include="CuboidCollider.cpp" />
+    <ClCompile Include="DebugUtils.cpp" />
     <ClCompile Include="DeferredLightingSystem.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="DualNumber.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="fallingSand\chunk.cpp" />
@@ -204,6 +206,7 @@
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="HoGraEngineApplication.cpp" />
     <ClCompile Include="HograTime.cpp" />
+    <ClCompile Include="Identifiable.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -213,13 +216,15 @@
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="InstanceGroup.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="makio\Makio.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="AudioListener.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MaterialFactory.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ObserveObjectControl.cpp" />
+    <ClCompile Include="OmniDirectionalShadowCaster.cpp" />
     <ClCompile Include="OrientationProvider.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Plane.cpp" />
@@ -241,10 +246,12 @@
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="SceneObjectFactory.cpp" />
     <ClCompile Include="ScriptObject.cpp" />
+    <ClCompile Include="ScriptProvider.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="ShaderProgramFactory.cpp" />
-    <ClCompile Include="ShadowCaster.cpp" />
+    <ClCompile Include="DirectionalShadowCaster.cpp" />
     <ClCompile Include="MemoryManager.cpp" />
+    <ClCompile Include="ShadowCaster.cpp" />
     <ClCompile Include="SphericalCollider.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -285,7 +292,9 @@
     <ClInclude Include="ControlAction.h" />
     <ClInclude Include="ControlActionManager.h" />
     <ClInclude Include="CuboidCollider.h" />
+    <ClInclude Include="DebugUtils.h" />
     <ClInclude Include="DeferredLightingSystem.h" />
+    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="DualNumber.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="fallingSand\chunk.h" />
@@ -311,6 +320,7 @@
     <ClInclude Include="GUI.h" />
     <ClInclude Include="HoGraEngineApplication.h" />
     <ClInclude Include="HograTime.h" />
+    <ClInclude Include="Identifiable.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_glfw.h" />
@@ -321,7 +331,9 @@
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="InstanceGroup.h" />
-    <ClInclude Include="Light.h" />
+    <ClInclude Include="jsonParseUtils.h" />
+    <ClInclude Include="makio\makio.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="AudioListener.h" />
     <ClInclude Include="Material.h" />
@@ -329,6 +341,7 @@
     <ClInclude Include="MathUtil.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ObserveObjectControl.h" />
+    <ClInclude Include="OmniDirectionalShadowCaster.h" />
     <ClInclude Include="OrientationConnector.h" />
     <ClInclude Include="OrientationProvider.h" />
     <ClInclude Include="Physics.h" />
@@ -353,10 +366,12 @@
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="SceneObjectFactory.h" />
     <ClInclude Include="ScriptObject.h" />
+    <ClInclude Include="ScriptProvider.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="ShaderProgramFactory.h" />
-    <ClInclude Include="ShadowCaster.h" />
+    <ClInclude Include="DirectionalShadowCaster.h" />
     <ClInclude Include="MemoryManager.h" />
+    <ClInclude Include="ShadowCaster.h" />
     <ClInclude Include="SphericalCollider.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture1D.h" />
@@ -374,54 +389,60 @@
     <ClInclude Include="volumetric\VolumeObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\Scenes\demoScene00.json" />
+    <None Include="..\Resources\Scenes\demoScene01.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene.json" />
+    <None Include="..\Resources\Scenes\sceneIdToFilenameMapping.json" />
     <None Include="..\Resources\Shaders\bloomPrefilter.frag" />
     <None Include="..\Resources\Shaders\bloomRecombine.frag" />
-<<<<<<< HEAD
+    <None Include="..\Resources\Shaders\deferredDarkPass.frag" />
+    <None Include="..\Resources\Shaders\deferredHomogeneGeometryPass.frag" />
+    <None Include="..\Resources\Shaders\instanced2D.vert" />
+    <None Include="..\Resources\Shaders\instanced3D.vert" />
+    <None Include="..\Resources\Shaders\makioCanvas.frag" />
+    <None Include="..\Resources\Shaders\makioToScreen.frag" />
+    <None Include="..\Resources\Shaders\omniDirShadowCast.frag" />
+    <None Include="..\Resources\Shaders\omniDirShadowCast.geom" />
+    <None Include="..\Resources\Shaders\omniDirShadowCast.vert" />
     <None Include="..\Resources\Shaders\pixelPhysics.frag" />
     <None Include="..\Resources\Shaders\pixelPhysics2.frag" />
-=======
-    <None Include="..\Resources\Shaders\boundingBox.frag" />
-    <None Include="..\Resources\Shaders\boundingBox.vert" />
->>>>>>> attenuation-blur
+    <None Include="..\Resources\Shaders\fullScreenQuad.vert" />
+    <None Include="..\Resources\Shaders\fullScreenQuadWithRayDir.vert" />
     <None Include="..\Resources\Shaders\screenQuadrant.vert" />
+    <None Include="..\Resources\Shaders\single3D.vert" />
     <None Include="..\Resources\Shaders\volumeBoundingGeometry.frag" />
     <None Include="..\Resources\Shaders\volumeBoundingGeometry.vert" />
     <None Include="..\Resources\Shaders\bypass.frag" />
     <None Include="..\Resources\Shaders\caption.frag" />
     <None Include="..\Resources\Shaders\debug.frag" />
     <None Include="..\Resources\Shaders\debug.vert" />
-    <None Include="..\Resources\Shaders\defaultDeferred.frag" />
-    <None Include="..\Resources\Shaders\defaultDeferred.vert" />
-    <None Include="..\Resources\Shaders\defaultForward.vert" />
-    <None Include="..\Resources\Shaders\deferredPBRshading.frag" />
-    <None Include="..\Resources\Shaders\deferredPBRshadingLightVolume.frag" />
+    <None Include="..\Resources\Shaders\deferredMappedGeometryPass.frag" />
+    <None Include="..\Resources\Shaders\instanced3DWithTBN.vert" />
+    <None Include="..\Resources\Shaders\single3DWithTBN.vert" />
+    <None Include="..\Resources\Shaders\deferredPBRDirectionalLightingPass.frag" />
+    <None Include="..\Resources\Shaders\deferredPBRLightVolumePass.frag" />
     <None Include="..\Resources\Shaders\depthEffects.frag" />
     <None Include="..\Resources\Shaders\displayNormals.geom" />
     <None Include="..\Resources\Shaders\bloomDownSampling.frag" />
     <None Include="..\Resources\Shaders\edgeDetect.frag" />
-    <None Include="..\Resources\Shaders\emissive.frag" />
+    <None Include="..\Resources\Shaders\deferredEmissiveGeometryPass.frag" />
     <None Include="..\Resources\Shaders\boundingGeometryFlatColor.frag" />
     <None Include="..\Resources\Shaders\gausianBlur.frag" />
     <None Include="..\Resources\Shaders\glyph.frag" />
     <None Include="..\Resources\Shaders\lightVolume.vert" />
     <None Include="..\Resources\Shaders\roughnessMetallicAOCombination.frag" />
-    <None Include="..\Resources\Shaders\simple2D-no-projection.vert" />
-    <None Include="..\Resources\Shaders\simple2D.vert" />
+    <None Include="..\Resources\Shaders\single2D.vert" />
     <None Include="..\Resources\Shaders\hdr.frag" />
     <None Include="..\Resources\Shaders\light.frag" />
     <None Include="..\Resources\Shaders\light.vert" />
     <None Include="..\Resources\Shaders\postprocess.frag" />
     <None Include="..\Resources\Shaders\proxyGeometryLightCamera.vert" />
     <None Include="..\Resources\Shaders\proxyGeometryViewCamera.vert" />
-    <None Include="..\Resources\Shaders\quad-depth.frag" />
-    <None Include="..\Resources\Shaders\quad.frag" />
-    <None Include="..\Resources\Shaders\quad.vert" />
     <None Include="..\Resources\Shaders\shadowCast.frag" />
     <None Include="..\Resources\Shaders\shadowCast.vert" />
-    <None Include="..\Resources\Shaders\skybox.frag" />
-    <None Include="..\Resources\Shaders\fullscreenQuad.vert" />
-    <None Include="..\Resources\Shaders\sprite.frag" />
-    <None Include="..\Resources\Shaders\spriteDeferred.frag" />
+    <None Include="..\Resources\Shaders\forwardSkybox.frag" />
+    <None Include="..\Resources\Shaders\forwardSprite.frag" />
+    <None Include="..\Resources\Shaders\deferredSprite.frag" />
     <None Include="..\Resources\Shaders\tapeEffect.frag" />
     <None Include="..\Resources\Shaders\transfer.frag" />
     <None Include="..\Resources\Shaders\transfer.vert" />
@@ -436,7 +457,7 @@
     <None Include="imgui.ini" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="HomebrewGraphicsEngine.rc" />
+    <ResourceCompile Include="makyo.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

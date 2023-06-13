@@ -17,7 +17,7 @@ namespace Hogra::MakioSim {
 #define MAKIO_RENDER_RES_X 1024
 #define MAKIO_RENDER_RES_Y 1024
 
-		void MakioCanvas::Init(ShaderProgram* canvasRender)
+		void MakyoCanvas::Init(ShaderProgram* canvasRender)
 		{
 			auto* quad = GeometryFactory::GetInstance()->GetSimpleQuad();
 			canvasFBO.Init();
@@ -61,7 +61,7 @@ namespace Hogra::MakioSim {
 
 		}
 
-		void MakioCanvas::Draw(FBO& outFBO, const Texture2D& depthTexture, const Camera& camera)
+		void MakyoCanvas::Draw(FBO& outFBO, const Texture2D& depthTexture, const Camera& camera)
 		{
 			if (!finishedRender) {
 
@@ -126,7 +126,7 @@ namespace Hogra::MakioSim {
 			outFBO.Unbind();
 		}
 
-		void MakioCanvas::UpdateGui()
+		void MakyoCanvas::UpdateGui()
 		{
 			/*
 			ImGui::Begin("Makyo settings");
@@ -137,7 +137,7 @@ namespace Hogra::MakioSim {
 			*/
 		}
 
-		void MakioCanvas::OnFinishRender()
+		void MakyoCanvas::OnFinishRender()
 		{
 			// Draw on screen:
 			FBO printFBO;
@@ -191,38 +191,25 @@ namespace Hogra::MakioSim {
 				}
 			}
 			*/
-			/*
+
+
 			{
 				auto var = dynamic_cast<UniformVariable<float>*>(
-					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("_s0")
+					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("lineWidth")
 					);
 				if (nullptr != var) {
-					var->Set(var->Get() + 0.001f);
-					DebugUtils::PrintMsg("Makio", std::string("s0: ").append(std::to_string(var->Get())).c_str());
-					if (var->Get() > 0.5f) {
-						var->Set(0.5f);
+					var->Set(var->Get() + 0.0001f);
+					DebugUtils::PrintMsg("Makyo", std::string("lineWidth: ").append(std::to_string(var->Get())).c_str());
+					if (var->Get() > 0.1f) {
+						DebugUtils::PrintMsg("Makyo", "Finished sweep.");
+						var->Set(0.1f);
 
 					}
 				}
 			}
-			{
-				auto var = dynamic_cast<UniformVariable<float>*>(
-					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("_s1")
-					);
-				if (nullptr != var) {
-					var->Set(var->Get() - 0.001f);
-					DebugUtils::PrintMsg("Makio", std::string("s1: ").append(std::to_string(var->Get())).c_str());
-					if (var->Get() < 0.5f) {
-						DebugUtils::PrintMsg("Makio", "Finished sweep.");
-						var->Set(0.5f);
 
-					}
-				}
-			}
 			finishedRender = false;
-			wasFinished = false;
-			*/
-
+			wasFinished = false;			
 		}
 
 	}

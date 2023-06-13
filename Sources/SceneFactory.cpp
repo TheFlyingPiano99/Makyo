@@ -760,7 +760,7 @@ namespace Hogra {
 	{
 		auto* scene = LoadSceneFromFile(AssetFolderPathManager::getInstance()->getScenesFolderPath().append("magicMirrorScene.json"));
 		
-		auto* makioCanvas = Allocator::New<MakioSim::MakioCanvas>();
+		auto* makioCanvas = Allocator::New<MakioSim::MakyoCanvas>();
 		makioCanvas->Init(scene->GetShaderProgramByName("magicMirrorShader"));
 		scene->GetSceneObjectByName("Dummy makio obj")->AddComponent(makioCanvas);
 		scene->GetSceneObjectByName("Dummy makio obj")->SetIsVisible(false);

@@ -7,15 +7,16 @@ in vec4 w_rayDir;
 
 uniform int mirrorSampleResolution;
 uniform vec2 mirrorSampleAreaScale;
-uniform float mirrorDistance;
+uniform float wMirrorDistance;
 uniform float mirrorShininess;
 uniform float mirrorDepth;
 uniform float mirrorCurvatureRadius;
-uniform vec2 mirrorSize;
-uniform vec4 lightPos;
+uniform vec2 wMirrorSize;
+uniform vec2 wCanvasSize;
+uniform vec4 wLightPos;
 uniform float lightPowerDensity;
 uniform float mirrorConvexity;
-uniform float lineWidth;
+uniform float wShapeOutlineWidth;
 uniform float carvRadius;
 uniform float carvConvexity;
 uniform int lineMode;   // 0 ... step, 1 ... carving
@@ -70,35 +71,37 @@ vec3 topSquare(vec2 uv) {
     float addH = 0;
     float dU = 0;
     float dV = 0;
-    if (uv.x <= _sx1 + lineWidth) {
+    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+
+    if (uv.x <= _sx1 + uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-            res = smoothStep(uv.x, _sx1, _sx1 + lineWidth, mirrorDepth, 1);
+            res = smoothStep(uv.x, _sx1, _sx1 + uvLineWidth.x, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-            res = curvature(uv.x, _sx1, _sx1 + lineWidth, carvRadius, carvConvexity);
+            res = curvature(uv.x, _sx1, _sx1 + uvLineWidth.x, carvRadius, carvConvexity);
          }
          addH = res.x;
          dU = res.y;
     }
-    else if (uv.x >= _sx2 - lineWidth) {
+    else if (uv.x >= _sx2 - uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-            res = smoothStep(uv.x, _sx2 - lineWidth, _sx2, mirrorDepth, -1);
+            res = smoothStep(uv.x, _sx2 - uvLineWidth.x, _sx2, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-            res = curvature(uv.x, _sx2 - lineWidth, _sx2, carvRadius, carvConvexity);
+            res = curvature(uv.x, _sx2 - uvLineWidth.x, _sx2, carvRadius, carvConvexity);
          }
          addH = res.x;
          dU = res.y;
     }
-    else if (uv.y <= _sy0 + lineWidth) {
+    else if (uv.y <= _sy0 + uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.y, _sy0, _sy0 + lineWidth, mirrorDepth, 1);
+             res = smoothStep(uv.y, _sy0, _sy0 + uvLineWidth.y, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.y, _sy0, _sy0 + lineWidth, carvRadius, carvConvexity);
+             res = curvature(uv.y, _sy0, _sy0 + uvLineWidth.y, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
@@ -113,35 +116,37 @@ vec3 bottomSquare(vec2 uv) {
     float addH = 0;
     float dU = 0;
     float dV = 0;
-    if (uv.x <= _sx1 + lineWidth) {
+    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+
+    if (uv.x <= _sx1 + uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.x, _sx1, _sx1 + lineWidth, mirrorDepth, 1);
+             res = smoothStep(uv.x, _sx1, _sx1 + uvLineWidth.x, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.x, _sx1, _sx1 + lineWidth, carvRadius, carvConvexity);
+             res = curvature(uv.x, _sx1, _sx1 + uvLineWidth.x, carvRadius, carvConvexity);
          }
          addH = res.x;
          dU = res.y;
     }
-    else if (uv.x >= _sx2 - lineWidth) {
+    else if (uv.x >= _sx2 - uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-            res = smoothStep(uv.x, _sx2 - lineWidth, _sx2, mirrorDepth, -1);
+            res = smoothStep(uv.x, _sx2 - uvLineWidth.x, _sx2, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-            res = curvature(uv.x, _sx2 - lineWidth, _sx2, carvRadius, carvConvexity);
+            res = curvature(uv.x, _sx2 - uvLineWidth.x, _sx2, carvRadius, carvConvexity);
          };
          addH = res.x;
          dU = res.y;
     }
-    else if (uv.y >= _sy3 - lineWidth) {
+    else if (uv.y >= _sy3 - uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.y, _sy3 - lineWidth, _sy3, mirrorDepth, -1);
+             res = smoothStep(uv.y, _sy3 - uvLineWidth.y, _sy3, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.y, _sy3 - lineWidth, _sy3, carvRadius, carvConvexity);
+             res = curvature(uv.y, _sy3 - uvLineWidth.y, _sy3, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
@@ -156,35 +161,37 @@ vec3 leftSquare(vec2 uv) {
     float addH = 0;
     float dU = 0;
     float dV = 0;
-    if (uv.y <= _sy1 + lineWidth) {
+    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+
+    if (uv.y <= _sy1 + uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.y, _sy1, _sy1 + lineWidth, mirrorDepth, 1);
+             res = smoothStep(uv.y, _sy1, _sy1 + uvLineWidth.y, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.y, _sy1, _sy1 + lineWidth, carvRadius, carvConvexity);
+             res = curvature(uv.y, _sy1, _sy1 + uvLineWidth.y, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
     }
-    else if (uv.y >= _sy2 - lineWidth) {
+    else if (uv.y >= _sy2 - uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.y, _sy2 - lineWidth, _sy2, mirrorDepth, -1);
+             res = smoothStep(uv.y, _sy2 - uvLineWidth.y, _sy2, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.y, _sy2 - lineWidth, _sy2, carvRadius, carvConvexity);
+             res = curvature(uv.y, _sy2 - uvLineWidth.y, _sy2, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
     }
-    else if (uv.x <= _sx0 + lineWidth) {
+    else if (uv.x <= _sx0 + uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.x, _sx0, _sx0 + lineWidth, mirrorDepth, 1);
+             res = smoothStep(uv.x, _sx0, _sx0 + uvLineWidth.x, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.x, _sx0, _sx0 + lineWidth, carvRadius, carvConvexity);
+             res = curvature(uv.x, _sx0, _sx0 + uvLineWidth.x, carvRadius, carvConvexity);
          }
          addH = res.x;
          dU = res.y;
@@ -198,35 +205,37 @@ vec3 rightSquare(vec2 uv) {
     float addH = 0;
     float dU = 0;
     float dV = 0;
-    if (uv.y <= _sy1 + lineWidth) {
+    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+
+    if (uv.y <= _sy1 + uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-            res = smoothStep(uv.y, _sy1, _sy1 + lineWidth, mirrorDepth, 1);
+            res = smoothStep(uv.y, _sy1, _sy1 + uvLineWidth.y, mirrorDepth, 1);
          }
          else if (1 == lineMode) {
-            res = curvature(uv.y, _sy1, _sy1 + lineWidth, carvRadius, carvConvexity);
+            res = curvature(uv.y, _sy1, _sy1 + uvLineWidth.y, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
     }
-    else if (uv.y >= _sy2 - lineWidth) {
+    else if (uv.y >= _sy2 - uvLineWidth.y) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.y, _sy2 - lineWidth, _sy2, mirrorDepth, -1);
+             res = smoothStep(uv.y, _sy2 - uvLineWidth.y, _sy2, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.y, _sy2 - lineWidth, _sy2, carvRadius, carvConvexity);
+             res = curvature(uv.y, _sy2 - uvLineWidth.y, _sy2, carvRadius, carvConvexity);
          }
          addH = res.x;
          dV = res.y;
     }
-    else if (uv.x >= _sx3 - lineWidth) {
+    else if (uv.x >= _sx3 - uvLineWidth.x) {
          vec2 res;
          if (0 == lineMode) {
-             res = smoothStep(uv.x, _sx3 - lineWidth, _sx3, mirrorDepth, -1);
+             res = smoothStep(uv.x, _sx3 - uvLineWidth.x, _sx3, mirrorDepth, -1);
          }
          else if (1 == lineMode) {
-             res = curvature(uv.x, _sx3 - lineWidth, _sx3, carvRadius, carvConvexity);
+             res = curvature(uv.x, _sx3 - uvLineWidth.x, _sx3, carvRadius, carvConvexity);
          }
          addH = res.x;
          dU = res.y;
@@ -237,6 +246,9 @@ vec3 rightSquare(vec2 uv) {
     return vec3(addH, dU, dV);
 }
 
+/*
+    Calculates the normal and the height of the mirror at a given UV coordinate.
+*/
 vec4 normHeight(vec2 uv) {
 
     float h = 0;
@@ -290,7 +302,7 @@ vec4 normHeight(vec2 uv) {
     vec3 tanU = vec3(1, 0, dU);
     vec3 tanV = vec3(0, 1, dV);
 
-    return vec4(normalize(cross(tanU * vec3(mirrorSize, 1), tanV * vec3(mirrorSize, 1))), h.x);
+    return vec4(normalize(cross(tanU * vec3(wMirrorSize, 1), tanV * vec3(wMirrorSize, 1))), h.x);
 }
 
 float mirrorBRDF(vec3 inDir, vec3 outDir, vec3 normal) {
@@ -318,6 +330,8 @@ float interpolate(float a0, float a1, float w) {
      */
 }
 
+
+// ------------------------- RANDOM GENERATION ----------------------------------------------
 
 /* Create pseudorandom direction vector
  */
@@ -379,36 +393,42 @@ float perlin(float x, float y) {
 
 void main()
 {
-    vec3 wCanvasPos = vec3(texCoords, 0);
-    vec3 wCanvasNormal = vec3(0, 0, -1);
+    vec3 wCanvasPos = vec3((texCoords - 0.5) * wCanvasSize, 0.0);    // The canvas is always in z = 0 plane.
+    vec3 wCanvasNormal = vec3(0, 0, -1);                            // The canvas is always facing ing -z direction.
+
     float M = 0.0;  // Irradiance of canvas point
     for (int x = 0; x < mirrorSampleResolution; x++) {
         for (int y = 0; y < mirrorSampleResolution; y++) {
-            vec2 mirrorUV = texCoords 
+            vec2 mirrorUV = texCoords       // Most of the functions work with the [0, 1] uv coordinates.
                 + (vec2(x, y) / float(mirrorSampleResolution) - 0.5) * mirrorSampleAreaScale
-                + 2.0 * mirrorSampleAreaScale / float(mirrorSampleResolution) * vec2(perlin(1000.0 * texCoords.x  + x, 1000.0 * texCoords.y + y), perlin(1000.0 * texCoords.x + x, 1000.0 * texCoords.y - y)
-            );
+                
+                + mirrorSampleAreaScale / float(mirrorSampleResolution)   // Apply noise to sampling
+                * (2.0 * vec2(
+                    perlin(1000.0 * texCoords.x  + x, 1000.0 * texCoords.y + y),
+                    perlin(1000.0 * texCoords.x + x, 1000.0 * texCoords.y - y)
+                ) - 1.0)
+                
+                ;
             if (mirrorUV.x < 0 || mirrorUV.x > 1 || mirrorUV.y < 0 || mirrorUV.y > 1) {
-                continue;
+                continue;   // Skip this position if it is outside of the mirror area.
             }
-            vec4 normHeight = normHeight(mirrorUV);
-            vec3 mMirrorPos = vec3(mirrorUV, normHeight.w);
-            vec3 wMirrorPos = vec3(mirrorSize, 1) * mMirrorPos - vec3(0, 0, mirrorDistance);
-            vec3 wMirrorNormal = normHeight.xyz;
-            vec3 toMirror = normalize(wMirrorPos - wCanvasPos);
-            vec3 toLight = normalize(lightPos.xyz - wMirrorPos * lightPos.w);
-            float lightDitanceSquare = dot(toLight, toLight);
-            vec3 lightDir = toLight / lightDitanceSquare;
-            //M += lightDitanceSquare;
-            float Lin = 
-            lightPowerDensity / lightDitanceSquare 
-            * max(dot(lightDir, wMirrorNormal), 0)
-            * mirrorBRDF(lightDir, -toMirror, wMirrorNormal);   // integral over Omega (M_l * cos(theta) * BRDF)
-            Lin *= mirrorSampleAreaScale.x * mirrorSampleAreaScale.y / float(pow(mirrorSampleResolution, 2));   // c correction accounting for sample rate and sample area size
-            M += max(dot(toMirror, wCanvasNormal), 0) * Lin;    // integral over Omega (L_in * cos(theta)) d omega
+            vec4 wNormHeight = normHeight(mirrorUV);
+            vec3 wMirrorPos = vec3((mirrorUV - 0.5) * wMirrorSize, wNormHeight.w - wMirrorDistance);
+            vec3 wMirrorNormal = wNormHeight.xyz;
+            vec3 wToMirror = normalize(wMirrorPos - wCanvasPos);
+            vec3 wToLight = normalize(wLightPos.xyz - wMirrorPos * wLightPos.w);    // Direction if wLightPos.w = 0.
+            float wLightDitanceSquare = dot(wToLight, wToLight);
+            vec3 wLightDir = wToLight / sqrt(wLightDitanceSquare );
+            float delta = 1.0; // TODO calculate correction factor
+
+            float Lin =     // Radiance of mirror surface area
+                lightPowerDensity / wLightDitanceSquare
+                * max(dot(wLightDir, wMirrorNormal), 0)
+                * mirrorBRDF(wLightDir, -wToMirror, wMirrorNormal);   // integral over Omega (M_l * cos(theta) * BRDF)
+            M += max(dot(wToMirror, wCanvasNormal), 0) * Lin * delta;    // integral over Omega [L_in * cos(theta)] d omega
         }
     }
-    vec4 normHeight = normHeight(texCoords / mirrorSize);
+    vec4 normHeight = normHeight(texCoords / wMirrorSize);
     FragColor = vec4(M, 0.5 + 100.0 * normHeight.w, 0, 1);
     NormalOut = normHeight.xyz;
 }

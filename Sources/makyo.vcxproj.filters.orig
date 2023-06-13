@@ -70,12 +70,6 @@
     <Filter Include="Header Files\fallingSand">
       <UniqueIdentifier>{f658a671-17ea-4da2-97c0-3c1a51a5c3bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Scenes">
-      <UniqueIdentifier>{e19ec4f1-d8af-47fc-bf97-c6ccc6e6887e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Makio">
-      <UniqueIdentifier>{8fc3d0f1-9edc-4e8e-8f74-1cbd8752d9cd}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp">
@@ -189,7 +183,7 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp">
+    <ClCompile Include="Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PostProcessStage.cpp">
@@ -243,7 +237,7 @@
     <ClCompile Include="HoGraEngineApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DirectionalShadowCaster.cpp">
+    <ClCompile Include="ShadowCaster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PositionProvider.cpp">
@@ -395,27 +389,6 @@
     </ClCompile>
     <ClCompile Include="fallingSand\ice.cpp">
       <Filter>Header Files\fallingSand</Filter>
-    </ClCompile>
-    <ClCompile Include="Identifiable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptProvider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadowCaster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OmniDirectionalShadowCaster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectionalLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="makio\Makio.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -614,7 +587,7 @@
     <ClInclude Include="FirstPersonControl.h">
       <Filter>Header Files\Model\UserControls</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.h">
+    <ClInclude Include="Light.h">
       <Filter>Header Files\Model\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="LightManager.h">
@@ -623,7 +596,7 @@
     <ClInclude Include="DeferredLightingSystem.h">
       <Filter>Header Files\Model\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="DirectionalShadowCaster.h">
+    <ClInclude Include="ShadowCaster.h">
       <Filter>Header Files\Model\Lighting</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
@@ -749,30 +722,6 @@
     <ClInclude Include="fallingSand\ice.h">
       <Filter>Header Files\fallingSand</Filter>
     </ClInclude>
-    <ClInclude Include="jsonParseUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Identifiable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowCaster.h">
-      <Filter>Header Files\Model\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="OmniDirectionalShadowCaster.h">
-      <Filter>Header Files\Model\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionalLight.h">
-      <Filter>Header Files\Model\Lighting</Filter>
-    </ClInclude>
-    <ClInclude Include="makio\makio.h">
-      <Filter>Header Files\Makio</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -782,10 +731,10 @@
     <None Include="..\Resources\Shaders\volumeBoundingGeometry.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\deferredMappedGeometryPass.frag">
+    <None Include="..\Resources\Shaders\defaultDeferred.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\instanced3DWithTBN.vert">
+    <None Include="..\Resources\Shaders\defaultDeferred.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\boundingGeometryFlatColor.frag">
@@ -806,7 +755,19 @@
     <None Include="..\Resources\Shaders\proxyGeometryViewCamera.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\forwardSkybox.frag">
+    <None Include="..\Resources\Shaders\quad.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\quad.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\quad-depth.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\skybox.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\fullscreenQuad.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\transfer.frag">
@@ -834,7 +795,7 @@
     <None Include="..\Resources\Shaders\displayNormals.geom">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\deferredPBRDirectionalLightingPass.frag">
+    <None Include="..\Resources\Shaders\deferredPBRshading.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\debug.frag">
@@ -846,7 +807,7 @@
     <None Include="..\Resources\Shaders\glyph.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\single2D.vert">
+    <None Include="..\Resources\Shaders\simple2D.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\caption.frag">
@@ -858,7 +819,7 @@
     <None Include="..\Resources\Shaders\gausianBlur.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\deferredEmissiveGeometryPass.frag">
+    <None Include="..\Resources\Shaders\emissive.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\bloomDownSampling.frag">
@@ -873,10 +834,13 @@
     <None Include="..\Resources\Shaders\bloomRecombine.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\simple2D-no-projection.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
     <None Include="..\Resources\Shaders\lightVolume.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\deferredPBRLightVolumePass.frag">
+    <None Include="..\Resources\Shaders\deferredPBRshadingLightVolume.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\depthEffects.frag">
@@ -891,7 +855,7 @@
     <None Include="..\Resources\Shaders\voxelAttenuation.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\deferredSprite.frag">
+    <None Include="..\Resources\Shaders\spriteDeferred.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\voxelAttenuationCheap.frag">
@@ -900,10 +864,10 @@
     <None Include="..\Resources\Shaders\voxelColorCheap.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\forwardSprite.frag">
+    <None Include="..\Resources\Shaders\sprite.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\single3DWithTBN.vert">
+    <None Include="..\Resources\Shaders\defaultForward.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\voxelRayCast.frag">
@@ -912,6 +876,7 @@
     <None Include="..\Resources\Shaders\screenQuadrant.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+<<<<<<< HEAD
     <None Include="..\Resources\Shaders\voxelRayCastCheap.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
@@ -919,59 +884,17 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\pixelPhysics2.frag">
+=======
+    <None Include="..\Resources\Shaders\boundingBox.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\fullScreenQuad.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\fullScreenQuadWithRayDir.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\instanced2D.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\instanced3D.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\single3D.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\deferredHomogeneGeometryPass.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Scenes\demoScene00.json">
-      <Filter>Resource Files\Scenes</Filter>
-    </None>
-    <None Include="..\Resources\Scenes\demoScene01.json">
-      <Filter>Resource Files\Scenes</Filter>
-    </None>
-    <None Include="..\Resources\Scenes\sceneIdToFilenameMapping.json">
-      <Filter>Resource Files\Scenes</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\deferredDarkPass.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\omniDirShadowCast.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\omniDirShadowCast.geom">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\omniDirShadowCast.vert">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Scenes\magicMirrorScene.json">
-      <Filter>Resource Files\Scenes</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\makioCanvas.frag">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Resources\Shaders\makioToScreen.frag">
+    <None Include="..\Resources\Shaders\boundingBox.vert">
+>>>>>>> attenuation-blur
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="HomebrewGraphicsEngine.rc">
+    <ResourceCompile Include="makyo.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

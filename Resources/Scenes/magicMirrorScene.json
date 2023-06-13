@@ -33,32 +33,42 @@
         {
           "type": "vec2",
           "uniName": "mirrorSampleAreaScale",
-          "uniValue": [ 0.6, 0.6 ]
+          "uniValue": [ 0.6, 0.6 ],
+          "note": "The size of sampled area around a given normal direction. It is in UV coordinate system. It should be smaller than 1."
         },
         {
           "type": "float",
-          "uniName": "mirrorDistance",
-          "uniValue": 5
+          "uniName": "wMirrorDistance",
+          "uniValue": 5,
+          "note": "Distance between the mirror and the canvas."
         },
         {
           "type": "float",
           "uniName": "mirrorConvexity",
-          "uniValue": 0
+          "uniValue": 0,
+          "note": "Determines the overall curvature of the mirror; 0 - if no curvature, 1 - if positive curvature, -1 - if negative curvature"
+        },
+        {
+          "type": "float",
+          "uniName": "mirrorCurvatureRadius",
+          "uniValue": 30,
+          "note": "Radius of the mirrors overall curvature."
         },
         {
           "type": "float",
           "uniName": "carvRadius",
-          "uniValue": 20
+          "uniValue": 20,
+          "note": "The radious of intersection of the carving"
         },
         {
           "type": "float",
           "uniName": "carvConvexity",
-          "uniValue": -1
+          "uniValue": 1
         },
         {
           "type": "int",
           "uniName": "lineMode",
-          "uniValue": 1
+          "uniValue": 0
         },
         {
           "type": "float",
@@ -68,72 +78,87 @@
         {
           "type": "float",
           "uniName": "mirrorDepth",
-          "uniValue": 0.0001
+          "uniValue": 0.0001,
+          "note": "The depth of the engraving in the mirror surface."
         },
         {
           "type": "float",
-          "uniName": "lineWidth",
-          "uniValue": 0.02
-        },
-        {
-          "type": "float",
-          "uniName": "mirrorCurvatureRadius",
-          "uniValue": 30
+          "uniName": "wShapeOutlineWidth",
+          "uniValue": 0.001,
+          "note": "Width of the outline of the cross shape in world coordinate system."
         },
         {
           "type": "vec2",
-          "uniName": "mirrorSize",
-          "uniValue": [ 1.0, 1.0 ]
+          "uniName": "wMirrorSize",
+          "uniValue": [ 1.0, 1.0 ],
+          "note": "Size of the mirror in X and Y directions."
+
+        },
+        {
+          "type": "vec2",
+          "uniName": "wCanvasSize",
+          "uniValue": [ 1.0, 1.0 ],
+          "note": "Size of the canvas in X and Y directions."
+
         },
         {
           "type": "vec4",
-          "uniName": "lightPos",
-          "uniValue": [ 0.0, 0.0, 1.0, 0.0 ]
+          "uniName": "wLightPos",
+          "uniValue": [ 0.0, 0.0, 1.0, 0.0 ],
+          "note": "Light position / direction. Depends on the w component: if 1 than position, if 0 than its a direction."
         },
         {
           "type": "float",
           "uniName": "lightPowerDensity",
-          "uniValue": 0.05
+          "uniValue": 0.000001
         },
         {
           "type": "float",
           "uniName": "_sx0",
-          "uniValue": 0.2
+          "uniValue": 0.2,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sx1",
-          "uniValue": 0.4
+          "uniValue": 0.4,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sx2",
-          "uniValue": 0.6
+          "uniValue": 0.6,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sx3",
-          "uniValue": 0.8
+          "uniValue": 0.8,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sy0",
-          "uniValue": 0.2
+          "uniValue": 0.2,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sy1",
-          "uniValue": 0.4
+          "uniValue": 0.4,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sy2",
-          "uniValue": 0.6
+          "uniValue": 0.6,
+          "note": "Parameter related to the cross shape"
         },
         {
           "type": "float",
           "uniName": "_sy3",
-          "uniValue": 0.8
+          "uniValue": 0.8,
+          "note": "Parameter related to the cross shape"
         }
       ]
     }
