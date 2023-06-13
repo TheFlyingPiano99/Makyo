@@ -6,7 +6,7 @@
 Created with the Homebrew Graphics Engine.
 <a href="https://github.com/TheFlyingPiano99/HomebrewGraphicsEngine/tree/master" title="Hogra engine">Link to the repository</a>
 
-<img src="Documentation/screenshots/canvas.jpg" alt="Screenshot" width="50%" style="float: right;"/>
+<img src="Documentation/canvas.jpg" alt="Screenshot" width="50%" style="float: right;"/>
 
 ## Third-party libraries
 
