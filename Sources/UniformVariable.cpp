@@ -10,6 +10,10 @@ namespace Hogra {
 		glUniform1f(glGetUniformLocation(id, key.c_str()), value);
 	}
 
+	void UniformVariable<double>::Bind(unsigned int id) {
+		glUniform1d(glGetUniformLocation(id, key.c_str()), value);
+	}
+
 	void UniformVariable<int>::Bind(unsigned int id) {
 		glUniform1i(glGetUniformLocation(id, key.c_str()), value);
 	}

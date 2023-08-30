@@ -46,8 +46,8 @@
       "uniforms": [
         {
           "type": "int",
-          "uniName": "mirrorSampleResolution",
-          "uniValue": 200
+          "uniName": "mirrorSampleCountPerPixel",
+          "uniValue": 100
         },
         {
           "type": "vec2",
@@ -56,12 +56,12 @@
             0.6,
             0.6
           ],
-          "note": "The size of sampled area around a given normal direction. It is in UV coordinate system. It should be smaller than 1."
+          "note": "The scale of sampled area around a given normal direction. It is in UV coordinate system. It should be smaller than 1. Does not influence the physical dimensions of the simulated mirror or canvas."
         },
         {
           "type": "float",
           "uniName": "wMirrorDistance",
-          "uniValue": 8,
+          "uniValue": 2.5,
           "note": "Distance between the mirror and the canvas."
         },
         {
@@ -72,27 +72,27 @@
         },
         {
           "type": "float",
-          "uniName": "mirrorCurvatureRadius",
+          "uniName": "wMirrorCurvatureRadius",
           "uniValue": 10,
-          "note": "Radius of the mirrors overall curvature. (Discarded when the mirrorConvexity is 0.)"
+          "note": "Radius of the mirrors overall curvature in world space. (Discarded when the mirrorConvexity is 0.)"
         },
         {
           "type": "float",
-          "uniName": "carvRadius",
-          "uniValue": 20,
+          "uniName": "wCarvRadius",
+          "uniValue": 10,
           "note": "The radius of the carving curvature"
         },
         {
           "type": "float",
           "uniName": "carvConvexity",
-          "uniValue": 1,
+          "uniValue": -1,
           "note": "1 - extruded line; -1 = carved line"
         },
         {
           "type": "int",
           "uniName": "lineMode",
-          "uniValue": 0,
-          "note": "0 - smooth step between flat object and background; 1 - carved or extruded object"
+          "uniValue": 1,
+          "note": "0 - smooth step between flat object and flat background; 1 - carved or extruded object; 2 - flat object and curved background"
         },
         {
           "type": "float",
@@ -103,21 +103,21 @@
         {
           "type": "float",
           "uniName": "wMirrorDepth",
-          "uniValue": 0.0001,
+          "uniValue": 0.001,
           "note": "The depth of the engraving in the mirror surface in world coordinate system. Disregarded when lineMode is 1 (carved or extruded line)."
         },
         {
           "type": "float",
           "uniName": "wShapeOutlineWidth",
-          "uniValue": 0.001,
+          "uniValue": 0.02,
           "note": "Width of the outline of the cross shape in world space."
         },
         {
           "type": "vec2",
           "uniName": "wMirrorSize",
           "uniValue": [
-            1.0,
-            1.0
+            2.0,
+            2.0
           ],
           "note": "Size of the mirror in X and Y directions in world space."
         },
@@ -125,10 +125,10 @@
           "type": "vec2",
           "uniName": "wCanvasSize",
           "uniValue": [
-            1.0,
-            1.0
+            6.0,
+            6.0
           ],
-          "note": "Size of the canvas in X and Y directions."
+          "note": "Size of the canvas in X and Y directions in world space."
         },
         {
           "type": "vec4",
@@ -139,7 +139,7 @@
             1.0,
             0.0
           ],
-          "note": "Light position / direction. Depends on the w component: if 1 than position, if 0 than its a direction."
+          "note": "Light position / direction. Depends on the w component: if 1 than position, if 0 than it's a direction."
         },
         {
           "type": "float",

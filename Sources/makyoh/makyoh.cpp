@@ -154,62 +154,36 @@ namespace Hogra::MakioSim {
 			fullScreenQuad.Draw();
 
 			static int imgCounter = 0;
-			printFBO.saveToPPM(AssetFolderPathManager::getInstance()->getSavesFolderPath().append("canvas").append(std::to_string(imgCounter++)).append(".ppm"));
+			static float focalDepth = 0.0f;
 
 			/*
-			auto var = dynamic_cast<UniformVariable<float>*>(
-				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("mirrorDistance")
-			);
-			if (nullptr != var) {
-				var->Set(var->Get() - 0.1);
-			}
-			*/
-
-			/*
-			auto var = dynamic_cast<UniformVariable<float>*>(
-				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("inflexion")
+			auto uniMirrorDistance = dynamic_cast<UniformVariable<float>*>(
+				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wMirrorDistance")
 				);
-			if (nullptr != var) {
-				var->Set(var->Get() + 0.025f);
-				if (var->Get() > 1.0f) {
-					var->Set(1.0f);
-				}
+			printFBO.saveToPPM(AssetFolderPathManager::getInstance()->getSavesFolderPath().append("canvas")
+				.append((0 == imgCounter) ? "_focused" : ((1 == imgCounter) ? "_half_of_focal_depth" : "_double_of_focal_depth")).append(".ppm"));
+			if (0 == imgCounter) {
+				focalDepth = dynamic_cast<UniformVariable<float>*>(
+					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wCarvRadius"))->Get() / 2.0f;
+				uniMirrorDistance->Set(focalDepth / 2.0f);
+			}
+			else if (1 == imgCounter) {
+				uniMirrorDistance->Set(focalDepth * 2.0f);
+			}
+			else {
+				return;
 			}
 			*/
-
-			/*
-			auto var = dynamic_cast<UniformVariable<float>*>(
-				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("mirrorDepth")
+			auto uniMirrorDistance = dynamic_cast<UniformVariable<float>*>(
+				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wMirrorDistance")
 				);
-			if (nullptr != var) {
-				var->Set(var->Get() - 0.0001f);
-				DebugUtils::PrintMsg("Makio", std::string("Depth: ").append(std::to_string(var->Get())).c_str());
-				if (var->Get() < -0.01f) {
-					DebugUtils::PrintMsg("Makio", "Finished sweep.");
-					var->Set(-0.01f);
-
-				}
-			}
-			*/
-
-
-			{
-				auto var = dynamic_cast<UniformVariable<float>*>(
-					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("lineWidth")
-					);
-				if (nullptr != var) {
-					var->Set(var->Get() + 0.0001f);
-					DebugUtils::PrintMsg("Makyo", std::string("lineWidth: ").append(std::to_string(var->Get())).c_str());
-					if (var->Get() > 0.1f) {
-						DebugUtils::PrintMsg("Makyo", "Finished sweep.");
-						var->Set(0.1f);
-
-					}
-				}
-			}
+			uniMirrorDistance->Set(uniMirrorDistance->Get() + 0.25f);
+			printFBO.saveToPPM(AssetFolderPathManager::getInstance()->getSavesFolderPath().append("canvas")
+				.append(std::to_string(imgCounter)).append(".ppm"));
 
 			finishedRender = false;
 			wasFinished = false;			
+			imgCounter++;
 		}
 
 	}
