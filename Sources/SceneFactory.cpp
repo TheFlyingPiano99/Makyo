@@ -28,7 +28,7 @@
 #include "UniformVariableImpl.h"
 #include "HograTime.h"
 #include "DirectionalShadowCaster.h"
-#include "makio/Makio.h"
+#include "makyoh/makyoh.h"
 
 #include "fallingSand/chunk.h"
 #include "fallingSand/water.h"
@@ -762,8 +762,8 @@ namespace Hogra {
 		
 		auto* makioCanvas = Allocator::New<MakioSim::MakyoCanvas>();
 		makioCanvas->Init(scene->GetShaderProgramByName("magicMirrorShader"));
-		scene->GetSceneObjectByName("Dummy makio obj")->AddComponent(makioCanvas);
-		scene->GetSceneObjectByName("Dummy makio obj")->SetIsVisible(false);
+		scene->GetSceneObjectByName("Dummy makyoh obj")->AddComponent(makioCanvas);
+		scene->GetSceneObjectByName("Dummy makyoh obj")->SetIsVisible(false);
 
 		auto* toggleVisHeight = Allocator::New<ButtonKeyAction>();
 		toggleVisHeight->Init(GLFW_KEY_H, ButtonKeyAction::TriggerType::triggerOnPress);
@@ -1397,6 +1397,12 @@ namespace Hogra {
 						std::string typeStr = uniformData["type"];
 						if ("float" == typeStr) {
 							auto uniVar = Allocator::New<UniformVariable<float>>();
+							std::string name = uniformData["uniName"];
+							uniVar->Init(name, uniformData["uniValue"]);
+							shader->BindUniformVariable(uniVar);
+						}
+						else if ("double" == typeStr) {
+							auto uniVar = Allocator::New<UniformVariable<double>>();
 							std::string name = uniformData["uniName"];
 							uniVar->Init(name, uniformData["uniValue"]);
 							shader->BindUniformVariable(uniVar);

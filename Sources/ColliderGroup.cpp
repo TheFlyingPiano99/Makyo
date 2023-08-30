@@ -89,7 +89,7 @@ void Hogra::ColliderGroup::RemoveCollider(Collider* collider) {
 }
 
 int Hogra::ColliderGroup::GetLoad() {
-	return std::max(colliders.size(), subGroups.size());
+	return std::max((int)colliders.size(), (int)subGroups.size());
 }
 
 void Hogra::ColliderGroup::Clear()

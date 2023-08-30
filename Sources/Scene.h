@@ -132,7 +132,7 @@ namespace Hogra {
 			if (-1 < place) {
 				auto iter = renderLayers.begin();
 				for (int i = 0; i < place; i++) {
-					std::next(iter);
+					iter = std::next(iter);
 				}
 				renderLayers.emplace(iter, renderLayer);
 			}

@@ -24,7 +24,7 @@ void Hogra::CollisionManager::AddCollider(Collider* collider, const std::string&
 		}
 		if (!groupAlreadyExists) {
 			names.push_back(colliderGroupName);
-			collider->AddToColliderGroup(names.size() - 1);
+			collider->AddToColliderGroup((int)names.size() - 1);
 		}
 	}
 	root.AddCollider(collider);

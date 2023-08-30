@@ -77,7 +77,7 @@ namespace Hogra::Volumetric {
 				transferFunction.loadFeatures(stream, featureGroups);
 				stream.close();
 
-				nextGroupIdx = featureGroups.size() + 1;
+				nextGroupIdx = (int)featureGroups.size() + 1;
 
 				auto* all = Allocator::New<FeatureGroup>();
 				all->name = ALL_FEATURES_STR;
@@ -250,7 +250,7 @@ namespace Hogra::Volumetric {
 			std::cout << "STF feature count: " << transferFunction.GetFeatures().size() << std::endl;
 			featureGroups.clear();
 
-			nextGroupIdx = featureGroups.size() + 1;
+			nextGroupIdx = (int)featureGroups.size() + 1;
 
 			auto* all = Allocator::New<FeatureGroup>();
 			all->name = ALL_FEATURES_STR;

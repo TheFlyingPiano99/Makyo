@@ -1,4 +1,5 @@
 #include "AudioBuffer.h"
+#include <bit>
 
 namespace Hogra {
     

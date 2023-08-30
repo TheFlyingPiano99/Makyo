@@ -107,7 +107,7 @@ namespace Hogra::FallingSand {
 		}
 
 		unsigned int GetSize() {
-			return elements.size();
+			return (unsigned int)elements.size();
 		}
 
 		inline unsigned int PosToLinIdx(unsigned int x, unsigned int y)

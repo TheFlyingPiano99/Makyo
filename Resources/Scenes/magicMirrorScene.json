@@ -3,162 +3,197 @@
   "name": "Magic mirror scene",
   "pause": false,
   "debugMode": false,
-  "preferedUp": [ 0.0, 1.0, 0.0 ],
-  "backgroundColor": [ 0.07, 0.13, 0.17, 1.0 ],
+  "preferedUp": [
+    0.0,
+    1.0,
+    0.0
+  ],
+  "backgroundColor": [
+    0.07,
+    0.13,
+    0.17,
+    1.0
+  ],
   "camera": {
-    "eye": [ -10.0, 0.0, 0.0 ],
-    "lookAt": [ 0.0, 0.0, 0.0 ],
-    "prefUp": [ 0.0, 1.0, 0.0 ],
+    "eye": [
+      -10.0,
+      0.0,
+      0.0
+    ],
+    "lookAt": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "prefUp": [
+      0.0,
+      1.0,
+      0.0
+    ],
     "FOVdeg": 45.0,
     "nearPlane": 0.1,
     "farPlane": 1000.0
   },
-  "lights": [
-  ],
-  "textures": [
-  ],
+  "lights": [],
+  "textures": [],
   "shaders": [
     {
       "id": 3,
       "name": "magicMirrorShader",
       "vertexSourceFileName": "screenQuadrant.vert",
       "geometrySourceFileName": "",
-      "fragmentSourceFileName": "makioCanvas.frag",
+      "fragmentSourceFileName": "makyohCanvas.frag",
       "uniforms": [
         {
           "type": "int",
           "uniName": "mirrorSampleResolution",
-          "uniValue": 100
+          "uniValue": 200
         },
         {
           "type": "vec2",
           "uniName": "mirrorSampleAreaScale",
-          "uniValue": [ 0.6, 0.6 ],
+          "uniValue": [
+            0.6,
+            0.6
+          ],
           "note": "The size of sampled area around a given normal direction. It is in UV coordinate system. It should be smaller than 1."
         },
         {
           "type": "float",
           "uniName": "wMirrorDistance",
-          "uniValue": 5,
+          "uniValue": 8,
           "note": "Distance between the mirror and the canvas."
         },
         {
           "type": "float",
           "uniName": "mirrorConvexity",
-          "uniValue": 0,
+          "uniValue": 1,
           "note": "Determines the overall curvature of the mirror; 0 - if no curvature, 1 - if positive curvature, -1 - if negative curvature"
         },
         {
           "type": "float",
           "uniName": "mirrorCurvatureRadius",
-          "uniValue": 30,
-          "note": "Radius of the mirrors overall curvature."
+          "uniValue": 10,
+          "note": "Radius of the mirrors overall curvature. (Discarded when the mirrorConvexity is 0.)"
         },
         {
           "type": "float",
           "uniName": "carvRadius",
           "uniValue": 20,
-          "note": "The radious of intersection of the carving"
+          "note": "The radius of the carving curvature"
         },
         {
           "type": "float",
           "uniName": "carvConvexity",
-          "uniValue": 1
+          "uniValue": 1,
+          "note": "1 - extruded line; -1 = carved line"
         },
         {
           "type": "int",
           "uniName": "lineMode",
-          "uniValue": 0
+          "uniValue": 0,
+          "note": "0 - smooth step between flat object and background; 1 - carved or extruded object"
         },
         {
           "type": "float",
           "uniName": "mirrorShininess",
-          "uniValue": 1000000.0
+          "uniValue": 1000000.0,
+          "note": "An empiric parameter of the BRDF function."
         },
         {
           "type": "float",
-          "uniName": "mirrorDepth",
+          "uniName": "wMirrorDepth",
           "uniValue": 0.0001,
-          "note": "The depth of the engraving in the mirror surface."
+          "note": "The depth of the engraving in the mirror surface in world coordinate system. Disregarded when lineMode is 1 (carved or extruded line)."
         },
         {
           "type": "float",
           "uniName": "wShapeOutlineWidth",
           "uniValue": 0.001,
-          "note": "Width of the outline of the cross shape in world coordinate system."
+          "note": "Width of the outline of the cross shape in world space."
         },
         {
           "type": "vec2",
           "uniName": "wMirrorSize",
-          "uniValue": [ 1.0, 1.0 ],
-          "note": "Size of the mirror in X and Y directions."
-
+          "uniValue": [
+            1.0,
+            1.0
+          ],
+          "note": "Size of the mirror in X and Y directions in world space."
         },
         {
           "type": "vec2",
           "uniName": "wCanvasSize",
-          "uniValue": [ 1.0, 1.0 ],
+          "uniValue": [
+            1.0,
+            1.0
+          ],
           "note": "Size of the canvas in X and Y directions."
-
         },
         {
           "type": "vec4",
           "uniName": "wLightPos",
-          "uniValue": [ 0.0, 0.0, 1.0, 0.0 ],
+          "uniValue": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
           "note": "Light position / direction. Depends on the w component: if 1 than position, if 0 than its a direction."
         },
         {
           "type": "float",
           "uniName": "lightPowerDensity",
-          "uniValue": 0.000001
+          "uniValue": 1.0,
+          "note": "Power density of the light source shining on the mirror."
         },
         {
           "type": "float",
           "uniName": "_sx0",
           "uniValue": 0.2,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sx1",
           "uniValue": 0.4,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sx2",
           "uniValue": 0.6,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sx3",
           "uniValue": 0.8,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sy0",
           "uniValue": 0.2,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sy1",
           "uniValue": 0.4,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sy2",
           "uniValue": 0.6,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         },
         {
           "type": "float",
           "uniName": "_sy3",
           "uniValue": 0.8,
-          "note": "Parameter related to the cross shape"
+          "note": "Parameter related to positioning the cross shape. It's in uv space."
         }
       ]
     }
@@ -169,8 +204,7 @@
       "name": "magicMirrorMaterial",
       "type": "custom",
       "shaderId": 3,
-      "textureIds": [
-      ]
+      "textureIds": []
     }
   ],
   "geometries": [
@@ -197,19 +231,30 @@
       "place": -1
     }
   ],
-  "postProcessStages": [
-  ],
+  "postProcessStages": [],
   "sceneObjects": [
     {
       "id": 7,
-      "name": "Dummy makio obj",
+      "name": "Dummy makyoh obj",
       "meshId": 6,
       "instanceGroupName": "",
       "renderLayerName": "ForwardLayer",
-      "position": [ 0, 0, 0 ],
-      "scale": [ 1, 1, 1 ],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
       "useEulerAngles": false,
-      "eulerAnglesDeg": [ 0, 0, 0 ],
+      "eulerAnglesDeg": [
+        0,
+        0,
+        0
+      ],
       "isVisible": true,
       "isCastingShadow": false
     }
@@ -222,9 +267,17 @@
       "alignment": "centered",
       "verticalPlacing": "relative",
       "horizontalPlacing": "relative",
-      "screenPosition": [ 0.5, 0.05 ],
+      "screenPosition": [
+        0.5,
+        0.05
+      ],
       "scale": 0.5,
-      "color": [ 0, 1, 0.5, 1 ]
+      "color": [
+        0,
+        1,
+        0.5,
+        1
+      ]
     }
   ]
 }
