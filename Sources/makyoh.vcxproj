@@ -391,7 +391,11 @@
   <ItemGroup>
     <None Include="..\Resources\Scenes\demoScene00.json" />
     <None Include="..\Resources\Scenes\demoScene01.json" />
-    <None Include="..\Resources\Scenes\magicMirrorScene.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene01.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene02.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene02_tanh.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene03.json" />
+    <None Include="..\Resources\Scenes\magicMirrorScene04.json" />
     <None Include="..\Resources\Scenes\sceneIdToFilenameMapping.json" />
     <None Include="..\Resources\Shaders\bloomPrefilter.frag" />
     <None Include="..\Resources\Shaders\bloomRecombine.frag" />

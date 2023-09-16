@@ -155,31 +155,52 @@ namespace Hogra::MakioSim {
 
 			static int imgCounter = 0;
 			static float focalDepth = 0.0f;
+			static float shininess = 0.0f;
+			int res = 0;
 
-			/*
 			auto uniMirrorDistance = dynamic_cast<UniformVariable<float>*>(
 				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wMirrorDistance")
 				);
+			auto uniShininess = dynamic_cast<UniformVariable<float>*>(
+				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("mirrorShininess")
+				);
+			auto uniResolution = 
+				dynamic_cast<UniformVariable<int>*>(
+					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("mirrorSampleCountPerPixel")
+			);
+
+			/*
 			printFBO.saveToPPM(AssetFolderPathManager::getInstance()->getSavesFolderPath().append("canvas")
 				.append((0 == imgCounter) ? "_focused" : ((1 == imgCounter) ? "_half_of_focal_depth" : "_double_of_focal_depth")).append(".ppm"));
 			if (0 == imgCounter) {
 				focalDepth = dynamic_cast<UniformVariable<float>*>(
 					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wCarvRadius"))->Get() / 2.0f;
+				shininess = dynamic_cast<UniformVariable<float>*>(
+					quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("mirrorShininess"))->Get();
+				//res = uniShininess->Get();
 				uniMirrorDistance->Set(focalDepth / 2.0f);
+				uniShininess->Set(shininess / 1.4f );
+				//uniResolution->Set(res * 3 / 2);
 			}
 			else if (1 == imgCounter) {
 				uniMirrorDistance->Set(focalDepth * 2.0f);
+				uniShininess->Set(shininess * 1.4f);
+				//uniResolution->Set(res);
 			}
 			else {
 				return;
 			}
 			*/
+
+			/*
 			auto uniMirrorDistance = dynamic_cast<UniformVariable<float>*>(
 				quadrant.getMaterial()->GetShaderProgram()->GetUniformVariable("wMirrorDistance")
-				);
-			uniMirrorDistance->Set(uniMirrorDistance->Get() + 0.25f);
+			);
+			*/
+			uniMirrorDistance->Set(uniMirrorDistance->Get() + 0.5f);
 			printFBO.saveToPPM(AssetFolderPathManager::getInstance()->getSavesFolderPath().append("canvas")
 				.append(std::to_string(imgCounter)).append(".ppm"));
+
 
 			finishedRender = false;
 			wasFinished = false;			

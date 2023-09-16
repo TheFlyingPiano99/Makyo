@@ -41,6 +41,11 @@ namespace Hogra {
 		value = val;
 	}
 
+	void UniformVariable<int>::Set(const int val)
+	{
+		value = val;
+	}
+
 	template<typename T>
 	const T UniformVariable<T>::Get()
 	{

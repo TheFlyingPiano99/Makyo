@@ -770,8 +770,8 @@
     <ClInclude Include="DirectionalLight.h">
       <Filter>Header Files\Model\Lighting</Filter>
     </ClInclude>
-    <ClInclude Include="makyo\makyo.h">
-      <Filter>Header Files\Makyo</Filter>
+    <ClInclude Include="makyoh\makyoh.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -960,14 +960,22 @@
     <None Include="..\Resources\Shaders\omniDirShadowCast.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Scenes\magicMirrorScene.json">
+    <None Include="..\Resources\Scenes\magicMirrorScene01.json">
       <Filter>Resource Files\Scenes</Filter>
     </None>
-    <None Include="..\Resources\Shaders\makyoCanvas.frag">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Resources\Shaders\makyohCanvas.frag" />
+    <None Include="..\Resources\Shaders\makyohToScreen.frag" />
+    <None Include="..\Resources\Scenes\magicMirrorScene02.json">
+      <Filter>Resource Files\Scenes</Filter>
     </None>
-    <None Include="..\Resources\Shaders\makyoToScreen.frag">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Resources\Scenes\magicMirrorScene03.json">
+      <Filter>Resource Files\Scenes</Filter>
+    </None>
+    <None Include="..\Resources\Scenes\magicMirrorScene04.json">
+      <Filter>Resource Files\Scenes</Filter>
+    </None>
+    <None Include="..\Resources\Scenes\magicMirrorScene02_tanh.json">
+      <Filter>Resource Files\Scenes</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

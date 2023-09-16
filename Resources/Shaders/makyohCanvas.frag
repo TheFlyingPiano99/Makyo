@@ -10,6 +10,8 @@ uniform vec2 mirrorSampleAreaScale;
 uniform float wMirrorDistance;
 uniform float mirrorShininess;
 uniform float wMirrorDepth;
+uniform float wMirrorBackgroundConvexity;
+uniform float wMirrorBackgroundRadius; 
 uniform float wMirrorCurvatureRadius;
 uniform vec2 wMirrorSize; // Should be (1, 1)
 uniform vec2 wCanvasSize; // Should be (1, 1)
@@ -86,6 +88,19 @@ vec2 smoothStep(float u, float s0, float s1, float h0, float dir) {
     );
 }
 
+
+vec2 smoothStepCurvature(vec2 uv, int direction, float s0, float s1, float h0) {
+    float c = 3;
+    float middle = (s0 + s1) * 0.5;
+    if (uv[direction] <= middle) {
+        return smoothStep(uv[direction], s0, middle, h0, 1) * vec2(1, 2);
+    }
+    else {
+        return smoothStep(uv[direction], middle, s1, h0, -1) * vec2(1, 2);
+    }
+}
+
+
 vec3 topSquare(vec2 uv) {
     float addH = 0;
     float dU = 0;
@@ -99,6 +114,9 @@ vec3 topSquare(vec2 uv) {
          }
          else if (1 == lineMode) {
             res = curvature(uv, 0, _sx1, _sx1 + uvLineWidth.x, wCarvRadius, carvConvexity);
+         }
+         else if (3 == lineMode) {
+            res = smoothStepCurvature(uv, 0, _sx1, _sx1 + uvLineWidth.x, wMirrorDepth);
          }
          else if (2 == lineMode) {
             res = vec2(0, 0);
@@ -114,6 +132,9 @@ vec3 topSquare(vec2 uv) {
          else if (1 == lineMode) {
             res = curvature(uv, 0, _sx2 - uvLineWidth.x, _sx2, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+            res = smoothStepCurvature(uv, 0, _sx2 - uvLineWidth.x, _sx2, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -128,6 +149,9 @@ vec3 topSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 1, _sy0, _sy0 + uvLineWidth.y, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 1, _sy0, _sy0 + uvLineWidth.y, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -136,6 +160,14 @@ vec3 topSquare(vec2 uv) {
     }
     else if (0 == lineMode) {
         addH = wMirrorDepth;
+    }
+    else if (2 == lineMode) {
+        vec3 res = sphericalCurvature(uv, _sx1 + uvLineWidth.x, _sx2 - uvLineWidth.x, _sy0 + uvLineWidth.y, _sy1,
+            wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+        );
+        addH = res.x;
+        dU = res.y;
+        dV = res.z;
     }
     return vec3(addH, dU, dV);
 }
@@ -154,6 +186,9 @@ vec3 bottomSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 0, _sx1, _sx1 + uvLineWidth.x, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 0, _sx1, _sx1 + uvLineWidth.x, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -167,6 +202,9 @@ vec3 bottomSquare(vec2 uv) {
          }
          else if (1 == lineMode) {
             res = curvature(uv, 0, _sx2 - uvLineWidth.x, _sx2, wCarvRadius, carvConvexity);
+         }
+         else if (3 == lineMode) {
+            res = smoothStepCurvature(uv, 0, _sx2 - uvLineWidth.x, _sx2, wMirrorDepth);
          }
          else if (2 == lineMode) {
             res = vec2(0, 0);
@@ -182,6 +220,9 @@ vec3 bottomSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 1, _sy3 - uvLineWidth.y, _sy3, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 1, _sy3 - uvLineWidth.y, _sy3, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -190,6 +231,14 @@ vec3 bottomSquare(vec2 uv) {
     }
     else if (0 == lineMode) {
         addH = wMirrorDepth;
+    }
+    else if (2 == lineMode) {
+        vec3 res = sphericalCurvature(uv, _sx1 + uvLineWidth.x, _sx2 - uvLineWidth.x, _sy2, _sy3 - uvLineWidth.y,
+            wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+        );
+        addH = res.x;
+        dU = res.y;
+        dV = res.z;
     }
     return vec3(addH, dU, dV);
 }
@@ -208,6 +257,9 @@ vec3 leftSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 1, _sy1, _sy1 + uvLineWidth.y, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 1, _sy1, _sy1 + uvLineWidth.y, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -221,6 +273,9 @@ vec3 leftSquare(vec2 uv) {
          }
          else if (1 == lineMode) {
              res = curvature(uv, 1, _sy2 - uvLineWidth.y, _sy2, wCarvRadius, carvConvexity);
+         }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 1, _sy2 - uvLineWidth.y, _sy2, wMirrorDepth);
          }
          else if (2 == lineMode) {
             res = vec2(0, 0);
@@ -236,6 +291,9 @@ vec3 leftSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 0, _sx0, _sx0 + uvLineWidth.x, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 0, _sx0, _sx0 + uvLineWidth.x, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -244,6 +302,14 @@ vec3 leftSquare(vec2 uv) {
     }
     else if (0 == lineMode) {
         addH = wMirrorDepth;
+    }
+    else if (2 == lineMode) {
+        vec3 res = sphericalCurvature(uv, _sx0 + uvLineWidth.x, _sx1, _sy1 + uvLineWidth.y, _sy2 - uvLineWidth.y,
+            wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+        );
+        addH = res.x;
+        dU = res.y;
+        dV = res.z;
     }
     return vec3(addH, dU, dV);
 }
@@ -261,6 +327,9 @@ vec3 rightSquare(vec2 uv) {
          else if (1 == lineMode) {
             res = curvature(uv, 1, _sy1, _sy1 + uvLineWidth.y, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+            res = smoothStepCurvature(uv, 1, _sy1, _sy1 + uvLineWidth.y, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -274,6 +343,9 @@ vec3 rightSquare(vec2 uv) {
          }
          else if (1 == lineMode) {
              res = curvature(uv, 1, _sy2 - uvLineWidth.y, _sy2, wCarvRadius, carvConvexity);
+         }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 1, _sy2 - uvLineWidth.y, _sy2, wMirrorDepth);
          }
          else if (2 == lineMode) {
             res = vec2(0, 0);
@@ -289,6 +361,9 @@ vec3 rightSquare(vec2 uv) {
          else if (1 == lineMode) {
              res = curvature(uv, 0, _sx3 - uvLineWidth.x, _sx3, wCarvRadius, carvConvexity);
          }
+         else if (3 == lineMode) {
+             res = smoothStepCurvature(uv, 0, _sx3 - uvLineWidth.x, _sx3, wMirrorDepth);
+         }
          else if (2 == lineMode) {
             res = vec2(0, 0);
          }
@@ -297,6 +372,14 @@ vec3 rightSquare(vec2 uv) {
     }
     else if (0 == lineMode) {
         addH = wMirrorDepth;
+    }
+    else if (2 == lineMode) {
+        vec3 res = sphericalCurvature(uv, _sx2, _sx3 - uvLineWidth.x, _sy1 + uvLineWidth.y, _sy2 - uvLineWidth.y,
+            wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+        );
+        addH = res.x;
+        dU = res.y;
+        dV = res.z;
     }
     return vec3(addH, dU, dV);
 }
@@ -336,7 +419,13 @@ vec4 normHeight(vec2 uv) {
                     wHeight += wMirrorDepth;
                 }
                 else if (2 == lineMode) {
-                    
+                    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+                    vec3 res = sphericalCurvature(uv, _sx1, _sx2, _sy1, _sy2,
+                        wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+                    );
+                    wHeight += res.x;
+                    wDU += res.y;
+                    wDV += res.z;
                 }
             }
             else if (uv.x < _sx1) { // left column
@@ -346,6 +435,24 @@ vec4 normHeight(vec2 uv) {
                     wDU += retVal.y;
                     wDV += retVal.z;   
                 }
+                else if (uv.y < _sy1) {
+                    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+                    vec3 res = sphericalCurvature(uv, _sx0, _sx1, _sy0, _sy1,
+                        wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+                    );
+                    wHeight += res.x;
+                    wDU += res.y;
+                    wDV += res.z;
+                }
+                else if (uv.y > _sy2) {
+                    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+                    vec3 res = sphericalCurvature(uv, _sx0, _sx1, _sy2, _sy3,
+                        wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+                    );
+                    wHeight += res.x;
+                    wDU += res.y;
+                    wDV += res.z;
+                }
             }
             else if (uv.x > _sx2) { // right column
                 if (uv.y >= _sy1 && uv.y <= _sy2) { // right square
@@ -353,6 +460,24 @@ vec4 normHeight(vec2 uv) {
                     wHeight += retVal.x;
                     wDU += retVal.y;
                     wDV += retVal.z;
+                }
+               else if (uv.y < _sy1) {
+                    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+                    vec3 res = sphericalCurvature(uv, _sx2, _sx3, _sy0, _sy1,
+                        wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+                    );
+                    wHeight += res.x;
+                    wDU += res.y;
+                    wDV += res.z;
+                }
+                else if (uv.y > _sy2) {
+                    vec2 uvLineWidth = wShapeOutlineWidth.xx / wMirrorSize;
+                    vec3 res = sphericalCurvature(uv, _sx2, _sx3, _sy2, _sy3,
+                        wMirrorBackgroundRadius, wMirrorBackgroundConvexity
+                    );
+                    wHeight += res.x;
+                    wDU += res.y;
+                    wDV += res.z;
                 }
             }
         }
@@ -504,7 +629,7 @@ void main()
             M += double(max(dot(wToMirror, wCanvasNormal), 0)) * Lin * omega;    // approximation of integral over Omega [L_in * cos(theta)] d omega
         }
     }
-    vec4 normHeight = normHeight(texCoords / wMirrorSize);
-    IrradianceHeightOut = vec4(M, 0.5 + 100.0 * normHeight.w, 0, 1);  // ([W/m^2], [m])
+    vec4 normHeight = normHeight(texCoords / wMirrorSize * wCanvasSize);
+    IrradianceHeightOut = vec4(M, max(0.5 + 5000.0 * normHeight.w, 0.0), 0, 1);  // ([W/m^2], [m])
     NormalOut = normHeight.xyz;
 }

@@ -2,15 +2,27 @@
   "scenes": [
     {
       "id": 0,
-      "filename" : "demoScene00.json"
+      "filename": "demoScene00.json"
     },
     {
       "id": 1,
-      "filename" : "demoScene01.json"
+      "filename": "demoScene01.json"
     },
     {
       "id": 2,
-      "filename": "magicMirrorScene.json"
+      "filename": "magicMirrorScene01.json"
+    },
+    {
+      "id": 3,
+      "filename": "magicMirrorScene02.json"
+    },
+    {
+      "id": 4,
+      "filename": "magicMirrorScene03.json"
+    },
+    {
+      "id": 5,
+      "filename": "magicMirrorScene04.json"
     }
   ]
 }
